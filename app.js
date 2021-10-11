@@ -5,18 +5,35 @@ const playerFactory = (userSign) => {
 
 // gameboard object
 const gameBoard = {
-  board      : [ '', '', '', '', '', '', '', '', '' ],
-  render     : function() {},
-  getDomEls  : function() {
-    const squares = document.querySelectorAll('td');
+  board       : [ '', '', '', '', '', '', '', '', '' ],
+  init        : function() {
+    this.getDomEls();
+    this.bindEvents();
+    this.render();
   },
-  bindEvents : function() {}
+  render      : function() {},
+  getDomEls   : function() {
+    this.squares = document.querySelectorAll('td');
+  },
+  bindEvents  : function() {
+    this.squares.forEach((square) => {
+      square.addEventListener('click', this.render.bind(this));
+    });
+  },
+  updateBoard : function() {
+    board[e.target.id] = game.activePlayer;
+  }
+  // Add a new method below
+  // This method should be added to every square element
+  // Takes board[e.target.id] and equals it to the active player mark
 };
 
 // gameplay object
 const gameplay = (() => {
   const player1 = playerFactory('X');
   const player2 = playerFactory('O');
+
+  let activePlayer = player1;
 
   const possibleWinArrays = [
     [ 0, 1, 2 ],
